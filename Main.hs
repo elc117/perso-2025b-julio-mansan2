@@ -12,6 +12,10 @@ import Data.IORef
 import Control.Monad.IO.Class (liftIO)
 
 getHeroName body = body ^? key "name"
+getBiography body = body ^? key "biography"
+getWork body = body ^? key "work"
+getConnections body = body ^? key "connections"
+getImage body = body ^? key "image"
 
 main :: IO ()
 main = scotty 3000 $ do
@@ -19,13 +23,13 @@ main = scotty 3000 $ do
     get "/" $ do
         file "static/index.html"
     
-    get "/static/styles.css" $ do
-        setHeader "Content-Type" "text/css"
-        file "static/styles.css"
-        
     get "/static/script.js" $ do
         setHeader "Content-Type" "application/javascript"
         file "static/script.js"
+
+    get "/static/styles.css" $ do
+        setHeader "Content-Type" "text/css"
+        file "static/styles.css"
     
     get "/hero" $ do
         randomId <- liftIO $ randomRIO (1, 731)
@@ -33,11 +37,13 @@ main = scotty 3000 $ do
         r <- liftIO $ W.get url
 
         let body = r ^. W.responseBody
-
+        
             heroObj = object
-                [ "name" .= (getHeroName body),
-
+                [ "name"        .= getHeroName body
+                , "biography"   .= getBiography body
+                , "work"        .= getWork body
+                , "connections" .= getConnections body
+                , "image"       .= getImage body
                 ]
 
         json heroObj
-        
