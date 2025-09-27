@@ -9,7 +9,6 @@ import qualified Data.Text as T
 import Control.Lens hiding ((.=))
 import Data.Aeson.Lens (key)
 
--- Copie as funções diretamente aqui para testar
 heroUrl :: Int -> String
 heroUrl heroId = "https://superheroapi.com/api/347206d2dac16447fdf234cb9ac6ac76/" ++ show heroId
 
