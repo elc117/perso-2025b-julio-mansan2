@@ -12,5 +12,5 @@ executable main
                      aeson,
                      scotty,
                      text,
-                     random
+                     random,
     default-language: Haskell2010
