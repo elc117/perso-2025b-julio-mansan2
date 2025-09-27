@@ -283,6 +283,50 @@
 
 ## 4. Orientação para Execução:
 
+- Certifique-se de ter o GHC e o Cabal instalados.
+- No terminal, dentro da pasta do projeto:
+    ````cabal
+    cabal build all
+    ````
+- Para executar o servidor principal:
+    ````cabal
+    cabal run main
+    
+    -- OU
+
+    runhaskell Main.hs
+    ````
+- Para executar os testes:
+    ````cabal
+    cabal run superhero-tests
+    ````
+
+OBS: Caso o programa não funcione e o JavaScript não responder, altere essa parte em Main.hs:
+
+````haskell
+main = scotty 3000 $ do
+````
+
+Para essa: 
+
+````haskell
+main = scotty 3001 $ do
+````
+
 ## 5. Resultado:
 
+<video src="static/program.mp4" controls></video>
+
 ## 6. Referências:
+
+- https://www.superheroapi.com
+- https://hackage.haskell.org/package/scotty
+- https://hackage.haskell.org/package/aeson
+- https://hackage.haskell.org/package/lens-aeson-1.2.3/docs/Data-Aeson-Lens.html
+- https://hackage.haskell.org/package/lens-tutorial-1.0.5/docs/Control-Lens-Tutorial.html
+- https://hackage.haskell.org/package/base-4.21.0.0/docs/Control-Monad-IO-Class.html
+- https://hackage.haskell.org/package/wreq
+- https://www.w3schools.com/css
+- https://www.alura.com.br/artigos/api?srsltid=AfmBOopAtRBhzCLCcWnXO1lOgNwb3hqg4-xbGrChuiBPPZoYL_lgyzhE
+- https://www.w3schools.com/js/js_api_intro.asp
+- https://www.w3schools.com/js/js_api_fetch.asp
