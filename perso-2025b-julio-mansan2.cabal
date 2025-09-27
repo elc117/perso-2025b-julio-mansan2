@@ -1,16 +1,26 @@
 cabal-version:      3.0
 name:               perso-2025b-julio-mansan2
-version:           0.1.0.0
-build-type:        Simple
+version:            0.1.0.0
+build-type:         Simple
 
 executable main
     main-is:          Main.hs
     build-depends:    base,
-                     wreq,
-                     lens,
-                     lens-aeson,
-                     aeson,
-                     scotty,
-                     text,
-                     random,
+                      wreq,
+                      lens,
+                      lens-aeson,
+                      aeson,
+                      scotty,
+                      text,
+                      random
+    default-language: Haskell2010
+
+executable superhero-tests
+    main-is:          TestMain.hs
+    build-depends:    base,
+                      HUnit,
+                      aeson,
+                      text,
+                      lens,
+                      lens-aeson
     default-language: Haskell2010

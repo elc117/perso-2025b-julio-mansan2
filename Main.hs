@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+module Main (main, heroUrl, selectNameAndImage) where
 
 import Web.Scotty
 import qualified Network.Wreq as W
