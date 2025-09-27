@@ -13,7 +13,6 @@ import Control.Monad.IO.Class (liftIO)
 import Control.Monad (replicateM)
 import Data.Maybe (mapMaybe)
 
-
 getHeroName body = body ^? key "name"
 getBiography body = body ^? key "biography"
 getWork body = body ^? key "work"
