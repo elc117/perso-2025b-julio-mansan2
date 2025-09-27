@@ -52,7 +52,7 @@ fetchFiveHeroesFiltered = do
     return $ map selectNameAndImage heros
 
 main :: IO ()
-main = scotty 3000 $ do
+main = scotty 3001 $ do
     -- Página inicial
     get "/" $ file "static/index.html"
     
