@@ -9,10 +9,8 @@ import Data.Aeson (object, (.=), Value)
 import qualified Data.Text.Lazy as TL
 import qualified Data.Text as T
 import System.Random (randomRIO)
-import Data.IORef
 import Control.Monad.IO.Class (liftIO)
 import Control.Monad (replicateM)
-import Data.Maybe (mapMaybe)
 
 getHeroName body = body ^? key "name"
 getBiography body = body ^? key "biography"
@@ -72,6 +70,7 @@ main = scotty 3000 $ do
         heroObj <- liftIO fetchHero
         json heroObj
 
+    -- Rota para pegar cinco heróis filtrados
     get "/quiz" $ do
         heroObj <- liftIO fetchFiveHeroesFiltered
         json heroObj
