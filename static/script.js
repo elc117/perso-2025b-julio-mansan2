@@ -57,21 +57,22 @@ function addInfos(data, informations) {
 async function iniciarQuiz() {
     const quizContainer = document.getElementById("quizContainer");
     const quizButton = document.getElementById("inicioQuiz");
+    const scoreDisplay = document.getElementById("scoreDisplay");
+
     quizContainer.innerHTML = "";
+    scoreDisplay.textContent = "Score: 0";
 
     try {
         quizButton.disabled = true;
-        quizButton.innerHTML = "Reset Quiz";
-
         let score = 0;
-        await novaRodada(score, quizContainer);
+        await novaRodada(score, quizContainer, scoreDisplay);
     } catch (error) {
         console.error('Erro ao iniciar o quiz:', error);
     }
-    document.getElementById("inicioQuiz").disabled = false;
 }
 
-async function novaRodada(score, quizContainer) {
+
+async function novaRodada(score, quizContainer, scoreDisplay) {
     quizContainer.innerHTML = "";
 
     const response = await fetch('/quiz');
@@ -86,6 +87,10 @@ async function novaRodada(score, quizContainer) {
     imgSrc.style.height = "auto";
     quizContainer.appendChild(imgSrc);
 
+    const messageDiv = document.createElement("div");
+    messageDiv.id = "message";
+    quizContainer.appendChild(messageDiv);
+
     data.forEach((heroi, index) => {
         const button = document.createElement("button");
         button.textContent = heroi.name;
@@ -97,10 +102,20 @@ async function novaRodada(score, quizContainer) {
         button.addEventListener("click", async () => {
             if (parseInt(button.value) === correto) {
                 score++;
-                alert(`Correct! Your score is: ${score}`);
-                await novaRodada(score, quizContainer);
+                scoreDisplay.textContent = `Score: ${score}`;
+                messageDiv.textContent = "✅ Correct!";
+                messageDiv.style.color = "green";
+
+                setTimeout(() => {
+                    novaRodada(score, quizContainer, scoreDisplay);
+                }, 1000); // dá um tempinho antes da próxima rodada
             } else {
-                alert(`Wrong! The correct answer was: ${data[correto].name}. Your final score is: ${score}`);
+                messageDiv.textContent = `❌ Wrong! The correct answer was: ${data[correto].name}. Final Score: ${score}`;
+                messageDiv.style.color = "red";
+
+                setTimeout(() => {
+                    iniciarQuiz(); // reinicia automaticamente depois de mostrar a mensagem
+                }, 2000);
             }
         });
     });
