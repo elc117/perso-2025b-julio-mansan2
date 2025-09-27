@@ -64,19 +64,23 @@ async function iniciarQuiz() {
 
     try {
         quizButton.disabled = true;
+        quizButton.innerHTML = "Ongoing Quiz";
         let score = 0;
-        await novaRodada(score, quizContainer, scoreDisplay);
+        await novaRodada(score, quizContainer, scoreDisplay, quizButton);
     } catch (error) {
         console.error('Erro ao iniciar o quiz:', error);
     }
 }
 
 
-async function novaRodada(score, quizContainer, scoreDisplay) {
+async function novaRodada(score, quizContainer, scoreDisplay, quizButton) {
+    quizButton.innerHTML = "Loading...";
     quizContainer.innerHTML = "";
 
     const response = await fetch('/quiz');
     const data = await response.json();
+    
+    quizButton.innerHTML = "Ongoing Quiz";
 
     let correto = Math.floor(Math.random() * data.length);
 
@@ -100,6 +104,9 @@ async function novaRodada(score, quizContainer, scoreDisplay) {
 
     quizContainer.querySelectorAll("button").forEach(button => {
         button.addEventListener("click", async () => {
+
+            quizContainer.querySelectorAll("button").forEach(b => b.disabled = true);
+
             if (parseInt(button.value) === correto) {
                 score++;
                 scoreDisplay.textContent = `Score: ${score}`;
@@ -107,7 +114,7 @@ async function novaRodada(score, quizContainer, scoreDisplay) {
                 messageDiv.style.color = "green";
 
                 setTimeout(() => {
-                    novaRodada(score, quizContainer, scoreDisplay);
+                    novaRodada(score, quizContainer, scoreDisplay, quizButton);
                 }, 1000); // dá um tempinho antes da próxima rodada
             } else {
                 messageDiv.textContent = `❌ Wrong! The correct answer was: ${data[correto].name}. Final Score: ${score}`;
